@@ -1,0 +1,115 @@
+@use '../base/variables' as *;
+@use '../base/mixins' as *;
+
+.hamburger {
+  visibility: hidden;
+  position: absolute;
+  top: $spacing-md;
+  right: $spacing-lg;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: 21px;
+  cursor: pointer;
+
+  @include respond-to(sm) {
+    visibility: visible;
+  }
+
+  span {
+    display: block;
+    width: $spacing-lg;
+    height: 3px;
+    background-color: $text-primary;
+
+    &.long {
+      width: 36px;
+    }
+  }
+}
+
+.menu {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100vh;
+  z-index: $z-index-menu;
+  visibility: hidden;
+  opacity: 0;
+  padding-top: 0;
+  transition: all $transition-menu;
+
+  &.active {
+    left: 0;
+    visibility: visible;
+    opacity: 1;
+    padding-top: 0;
+  }
+}
+
+.menu_social {
+  padding-top: $spacing-lg;
+  display: flex;
+  justify-content: center;
+  gap: $spacing-xxl;
+
+  a {
+    text-decoration: none;
+  }
+}
+
+.menu__block {
+  position: relative;
+  width: 100vw;
+  height: 100%;
+  background-color: $color-chocolate;
+  transition: all $transition-menu;
+  padding-top: 140px;
+  z-index: $z-index-menu-block;
+
+  nav {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.menu__close {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  cursor: pointer;
+}
+
+.menu__list {
+  list-style-type: none;
+  padding-left: 35px;
+}
+
+.menu__link {
+  position: relative;
+  font-weight: $font-weight-bold;
+  font-size: $font-size-large;
+  line-height: 36px;
+  margin-bottom: $spacing-sm;
+
+  a {
+    color: $color-gray;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: -35px;
+    top: calc(50% - 8px);
+    height: 16px;
+    width: 16px;
+    border: 1px solid #000;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+    border-radius: 100%;
+    transition: all $transition-menu;
+  }
+}
+

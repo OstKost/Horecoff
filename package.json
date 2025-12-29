@@ -1,33 +1,19 @@
 {
-  "name": "horecoff",
-  "version": "1.0.0",
-  "description": "",
-  "main": "gulpfile.js",
+  "name": "horecoff-v2",
+  "version": "2.0.0",
+  "description": "Horecoff website - refactored version",
+  "type": "module",
   "scripts": {
-    "dev": "gulp"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "autoprefixer": "^10.2.6",
-    "browser-sync": "^2.26.12",
-    "gulp": "^4.0.2",
-    "gulp-autoprefixer": "^6.1.0",
-    "gulp-clean-css": "^4.3.0",
-    "gulp-cli": "^2.3.0",
-    "gulp-htmlmin": "^5.0.1",
-    "gulp-imagemin": "^6.2.0",
-    "gulp-rename": "^1.4.0",
-    "gulp-sass": "^4.1.0",
-    "postcss": "^8.3.4"
-  },
-  "browserslist": [
-    "last 1 version",
-    "> 1%",
-    "maintained node versions",
-    "not dead"
-  ],
   "dependencies": {
-    "chokidar": "^3.5.1"
+    "handlebars": "^4.7.8"
+  },
+  "devDependencies": {
+    "sass": "^1.69.5",
+    "vite": "^5.0.0",
+    "vite-plugin-handlebars": "^2.0.0"
   }
 }

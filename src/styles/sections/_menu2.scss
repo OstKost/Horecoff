@@ -1,0 +1,82 @@
+@use '../base/variables' as *;
+@use '../base/mixins' as *;
+.menu2 {
+  background: $color-salad;
+  padding: $spacing-sm $spacing-lg;
+  text-transform: uppercase;
+  font-size: 26px;
+  color: #000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+
+  @include respond-to(sm) {
+    font-size: $font-size-medium;
+    padding: $spacing-xs $spacing-sm;
+  }
+
+  a {
+    color: #000;
+    text-decoration: none;
+    margin-right: $spacing-md;
+    transition: color $transition-normal;
+    font-weight: $font-weight-bold;
+
+    &:hover {
+      color: #fff;
+    }
+
+    &:not(:last-child) {
+      &::after {
+        content: '|';
+        margin-left: $spacing-md;
+        font-weight: $font-weight-bold;
+
+        @include respond-to(sm) {
+          content: '';
+          margin-left: 0px;
+        }
+      }
+    }
+  }
+}
+
+.mr {
+  opacity: 0.5;
+  font-size: 28px;
+  font-weight: 600;
+  margin-left: auto;
+  align-self: center;
+}
+
+.ml {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.menu2 > div {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.menu2 > .ml {
+  flex: 0 0 75%;
+
+  @include respond-to(sm) {
+    flex: 0 0 50%;
+  }
+}
+
+.menu2 > .mr {
+  flex: 0 0 25%;
+  justify-content: flex-end;
+
+  @include respond-to(sm) {
+    flex: 0 0 50%;
+    justify-content: flex-end;
+  }
+}
+

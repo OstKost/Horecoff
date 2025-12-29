@@ -1,0 +1,77 @@
+@use '../base/variables' as *;
+@use '../base/mixins' as *;
+.uslugi {
+  padding: $spacing-md 0;
+  background: url($img-bg-uslugi) no-repeat 50% / cover;
+  background-color: $bg-primary;
+  height: auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.usrow {
+  display: flex;
+  justify-content: center;
+  gap: $spacing-xxl;
+  flex-wrap: wrap;
+
+  @include respond-to(md) {
+    flex-direction: column;
+    align-items: center;
+    gap: $spacing-md;
+  }
+}
+
+.usblock {
+  flex: 0 0 calc(33.333% - 27px);
+  background-color: $bg-primary;
+  text-align: center;
+  max-width: 330px;
+
+  @include respond-to(lg) {
+    flex: 0 0 calc(50% - 20px);
+  }
+
+  @include respond-to(md) {
+    flex: 1;
+  }
+
+  img {
+    max-width: 300px;
+    height: auto;
+    margin: $spacing-xs $spacing-xs 0 $spacing-xs;
+  }
+
+  h3 {
+    text-align: center;
+    font-weight: $font-weight-bold;
+    font-size: 22px;
+    color: $text-dark;
+    text-transform: uppercase;
+    padding: 17px 0 $spacing-md;
+    margin: 0;
+  }
+}
+
+.uso {
+  background-color: $bg-primary;
+  padding: $spacing-xs;
+
+  li {
+    font-size: $font-size-base;
+    color: $text-primary;
+    text-align: left;
+    margin: $spacing-xs;
+  }
+}
+
+.usb {
+  font-size: $font-size-base;
+  color: $text-primary;
+  margin: $spacing-xs;
+}
+
+.usw {
+  background-color: #f0f0f0;
+}
+

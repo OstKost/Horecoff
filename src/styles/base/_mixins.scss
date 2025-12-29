@@ -1,0 +1,110 @@
+@use 'variables' as *;
+
+// Media query mixins
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == xs {
+    @media screen and (max-width: $breakpoint-xs) {
+      @content;
+    }
+  } @else if $breakpoint == sm {
+    @media screen and (max-width: $breakpoint-sm) {
+      @content;
+    }
+  } @else if $breakpoint == md {
+    @media screen and (max-width: $breakpoint-md) {
+      @content;
+    }
+  } @else if $breakpoint == lg {
+    @media screen and (max-width: $breakpoint-lg) {
+      @content;
+    }
+  } @else if $breakpoint == xl {
+    @media screen and (max-width: $breakpoint-xl) {
+      @content;
+    }
+  } @else if $breakpoint == xxl {
+    @media screen and (max-width: $breakpoint-xxl) {
+      @content;
+    }
+  } @else if $breakpoint == min-sm {
+    @media screen and (min-width: $breakpoint-sm + 1px) {
+      @content;
+    }
+  }
+}
+
+// Flexbox mixins
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+// Button mixin
+@mixin button-base {
+  border: 0;
+  padding: 18px 52px;
+  background: $color-red;
+  border-radius: $border-radius-xl;
+  font-family: $font-family-primary;
+  font-style: normal;
+  font-weight: $font-weight-normal;
+  font-size: $font-size-large;
+  color: $text-primary;
+  display: block;
+  margin: 0 auto;
+  cursor: pointer;
+  text-decoration: none;
+  transition: $transition-fast;
+
+  &:hover {
+    background: $bg-button-hover;
+  }
+
+  a {
+    text-decoration: none;
+    color: $text-primary;
+  }
+}
+
+// Container mixin
+@mixin container {
+  max-width: $container-max-width;
+  margin: 0 auto;
+  padding: 0 $container-padding;
+  box-sizing: content-box;
+}
+
+// Section mixin
+@mixin section-base {
+  background-color: $bg-primary;
+  padding-top: $spacing-huge;
+}
+
+// Text truncate
+@mixin text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Clearfix
+@mixin clearfix {
+  &::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
+

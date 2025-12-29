@@ -1,0 +1,33 @@
+@use '../base/variables' as *;
+@use '../base/mixins' as *;
+// Hero section styles are included in header component
+// Additional hero-specific styles can be added here if needed
+
+.back_to_top {
+  font-size: $font-size-h2;
+  position: fixed;
+  bottom: $spacing-md;
+  right: $spacing-md;
+  z-index: $z-index-back-to-top;
+  width: 60px;
+  height: 60px;
+  text-align: center;
+  line-height: 30px;
+  color: #3a70e0;
+  cursor: pointer;
+  border-radius: $border-radius-sm;
+  display: none;
+
+  &:hover {
+    color: #00b8ff;
+  }
+
+  &.back_to_top-show {
+    display: block;
+  }
+}
+
+.lock {
+  overflow: hidden;
+}
+

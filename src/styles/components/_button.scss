@@ -1,0 +1,27 @@
+@use '../base/variables' as *;
+@use '../base/mixins' as *;
+
+.btn {
+  @include button-base;
+}
+
+.btn_info {
+  background-color: $color-blue;
+  padding: $spacing-xs $spacing-xl;
+  border-radius: $border-radius-button;
+  font-size: $font-size-base;
+}
+
+.btn_order {
+  margin-top: 70px;
+}
+
+.btn_blue-send {
+  width: 100%;
+  background-color: $color-blue;
+
+  &:hover {
+    background: $bg-blue-hover;
+  }
+}
+

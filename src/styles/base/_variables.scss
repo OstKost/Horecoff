@@ -1,0 +1,105 @@
+// Colors
+$color-salad: #c0da67;
+$color-black: #141f2e;
+$color-coffee: #76665c;
+$color-chocolate: #81533e;
+$color-white: #edeef0;
+$color-yellow: #f4b824;
+$color-asph: #5d5d5d;
+$color-gray: #c3c3c4;
+$color-skin: #b68567;
+$color-orange: #e87f1a;
+$color-red: #df3a52;
+$color-green: #55a83a;
+$color-blue: #2464a5;
+
+// Background colors
+$bg-primary: #141f2e;
+$bg-secondary: #23313f;
+$bg-footer: #222932;
+$bg-footer-bottom: #5d5d5d;
+$bg-hover: #354b60;
+$bg-button-hover: #c62038;
+$bg-blue-hover: #1b4b7b;
+
+// Text colors
+$text-primary: #edeef0;
+$text-secondary: #c3c3c4;
+$text-dark: #0d1528;
+
+// Typography
+$font-family-primary: 'Roboto', sans-serif;
+$font-family-secondary: 'Montserrat', sans-serif;
+
+// Font sizes
+$font-size-base: 18px;
+$font-size-small: 14px;
+$font-size-medium: 20px;
+$font-size-large: 24px;
+$font-size-xl: 28px;
+$font-size-xxl: 32px;
+$font-size-h2: 48px;
+$font-size-h2-mobile: 36px;
+
+// Font weights
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-bold: 700;
+$font-weight-black: 900;
+
+// Spacing
+$spacing-xs: 10px;
+$spacing-sm: 15px;
+$spacing-md: 20px;
+$spacing-lg: 30px;
+$spacing-xl: 40px;
+$spacing-xxl: 50px;
+$spacing-xxxl: 60px;
+$spacing-huge: 100px;
+
+// Container
+$container-max-width: 1440px;
+$container-padding: 30px;
+$container-padding-mobile: 15px;
+
+// Breakpoints
+$breakpoint-xs: 425px;
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1155px;
+$breakpoint-xxl: 1500px;
+
+// Transitions
+$transition-fast: 0.2s;
+$transition-normal: 0.3s;
+$transition-slow: 0.5s;
+$transition-menu: 0.7s;
+
+// Z-index
+$z-index-menu: 15;
+$z-index-menu-block: 16;
+$z-index-popup: 999;
+$z-index-back-to-top: 9999;
+
+// Border radius
+$border-radius-sm: 2px;
+$border-radius-md: 8px;
+$border-radius-lg: 18px;
+$border-radius-xl: 35px;
+$border-radius-button: 37px;
+$border-radius-circle: 50%;
+
+// Shadows
+$shadow-text: 0 2px 4px rgba(0, 0, 0, 0.25);
+$shadow-popup-overlay: rgba(35, 25, 15, 0.7);
+
+// Images
+$img-bg-main: '/img/bg_main.png';
+$img-bg-small: '/img/bg_small.png';
+$img-bg-kofe: '/img/bg_kofe.jpg';
+$img-bg-uslugi: '/img/uslugi.jpg';
+$img-3cups: '/img/3cups.png';
+$img-zerno: '/img/zerno.png';
+$img-coffgear: '/img/coffgear.png';
+

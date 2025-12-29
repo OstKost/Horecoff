@@ -1,0 +1,65 @@
+@use '../base/variables' as *;
+@use '../base/mixins' as *;
+
+.form {
+  padding: $spacing-lg $spacing-xl;
+
+  #textarea {
+    height: 190px;
+    text-align: left;
+    border-radius: $border-radius-lg;
+  }
+
+  h3 {
+    color: $text-primary;
+    font-size: $font-size-large;
+    text-align: center;
+    margin-bottom: $spacing-xl;
+  }
+}
+
+.form-control {
+  margin-bottom: $spacing-xs;
+  padding-bottom: $spacing-md;
+  position: relative;
+
+  &.error {
+    input {
+      border-color: #e74c3c;
+    }
+
+    small {
+      visibility: visible;
+    }
+  }
+
+  &.success {
+    input {
+      border-color: #2ecc71;
+    }
+  }
+
+  input,
+  textarea {
+    border: 2px solid #f0f0f0;
+    border-radius: 39px;
+    display: block;
+    width: 92%;
+    padding: $spacing-xs;
+    font-size: $font-size-small;
+
+    &:focus {
+      outline: 0;
+      border-color: #777;
+    }
+  }
+
+  small {
+    color: #e74c3c;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    visibility: hidden;
+  }
+}
+

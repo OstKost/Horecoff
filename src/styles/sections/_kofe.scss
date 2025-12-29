@@ -1,0 +1,103 @@
+@use '../base/variables' as *;
+@use '../base/mixins' as *;
+.kofe {
+  padding-top: 0px;
+  background-color: #000;
+}
+
+.kf {
+  font-weight: $font-weight-bold;
+  font-size: 38px;
+  color: $text-primary;
+  text-transform: uppercase;
+  text-align: center;
+
+  @include respond-to(md) {
+    font-size: 22px;
+  }
+}
+
+.kff {
+  color: $color-salad;
+  font-size: 38px;
+  font-weight: $font-weight-bold;
+
+  @include respond-to(md) {
+    font-size: 22px;
+  }
+}
+
+.ko {
+  background: url($img-bg-kofe) no-repeat 50% / cover;
+  background-color: $bg-primary;
+  height: auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.k1 {
+  display: flex;
+  justify-content: space-between;
+  color: $text-primary;
+  font-size: $font-size-xl;
+  margin: $spacing-xl auto;
+
+  @include respond-to(md) {
+    flex-direction: column;
+    margin: 0px auto;
+    font-size: $font-size-base;
+  }
+}
+
+.text-block {
+  max-width: 350px;
+
+  @include respond-to(md) {
+    max-width: 100%;
+    margin: $spacing-md 0;
+  }
+}
+
+.zerno {
+  &::before {
+    content: '';
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    background-image: url($img-zerno);
+    background-size: cover;
+    background-position: center;
+    margin-right: $spacing-xs;
+  }
+}
+
+.k11 {
+  width: 85%;
+
+  @include respond-to(md) {
+    width: 100%;
+  }
+}
+
+.k12 {
+  width: 100%;
+}
+
+.k2 {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: $spacing-xl auto;
+  color: $text-primary;
+  font-size: $font-size-xl;
+
+  @include respond-to(md) {
+    margin: $spacing-md auto;
+    font-size: $font-size-base;
+  }
+}
+
+.tr {
+  text-align: right;
+}
+

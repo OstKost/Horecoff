@@ -1,0 +1,136 @@
+@use '../base/variables' as *;
+@use '../base/mixins' as *;
+
+.header {
+  background: url($img-bg-main) no-repeat 50% / cover;
+  background-color: $bg-primary;
+
+  @include respond-to(sm) {
+    background: url($img-bg-small) no-repeat 50% / cover;
+    background-color: $bg-primary;
+  }
+}
+
+.header_wrap {
+  padding-top: $spacing-xxl;
+
+  @include respond-to(sm) {
+    padding-top: $spacing-xs;
+  }
+}
+
+.header_top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  @include respond-to(lg) {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  @include respond-to(sm) {
+    align-items: flex-start;
+  }
+}
+
+.header_logo {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+
+  @include respond-to(sm) {
+    padding-left: $spacing-md;
+  }
+}
+
+.header {
+  nav {
+    ul {
+      gap: 1.9vw;
+      padding: 0;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      @include respond-to(sm) {
+        display: none;
+      }
+    }
+
+    li {
+      list-style: none;
+      font-family: $font-family-primary;
+      font-size: $font-size-base;
+      text-align: center;
+    }
+
+    a {
+      text-decoration: none;
+      color: $text-primary;
+      transition: $transition-normal;
+      border-bottom: 2px solid transparent;
+
+      &:hover {
+        border-bottom: 2px solid $color-salad;
+        color: $color-salad;
+      }
+    }
+  }
+}
+
+.header_social {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 162px;
+
+  @include respond-to(sm) {
+    display: none;
+  }
+
+  svg {
+    fill: $text-primary;
+    transition: $transition-normal;
+
+    &:hover {
+      fill: $color-salad;
+    }
+  }
+}
+
+.header_brod {
+  margin-top: 150px;
+  max-width: 50%;
+
+  @include respond-to(lg) {
+    max-width: 100%;
+  }
+
+  p {
+    text-align: right;
+    font-size: 26px;
+    line-height: 130%;
+    color: $text-primary;
+  }
+}
+
+.header {
+  .btn_area {
+    margin-top: 150px;
+    display: flex;
+    align-items: center;
+    padding-bottom: 105px;
+  }
+}
+
+.header_ll {
+  border-left-color: $color-salad;
+  border-left-style: solid;
+  border-left-width: 10px;
+  text-transform: uppercase;
+  padding-left: $spacing-xs;
+  font-size: 26px;
+  color: $text-primary;
+}
+

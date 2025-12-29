@@ -1,0 +1,30 @@
+// Main SCSS file - imports all modules
+
+// Base
+@use 'base/reset';
+@use 'base/variables' as *;
+@use 'base/mixins' as *;
+@use 'base/typography';
+
+// Components
+@use 'components/button';
+@use 'components/header';
+@use 'components/menu';
+@use 'components/form';
+@use 'components/popup';
+@use 'components/footer';
+
+// Sections
+@use 'sections/hero';
+@use 'sections/menu2';
+@use 'sections/kofe';
+@use 'sections/uslugi';
+@use 'sections/lubov';
+@use 'sections/about';
+@use 'sections/apparatus';
+@use 'sections/contacts';
+
+// Utilities
+@use 'utilities/helpers';
+@use 'utilities/media-queries';
+

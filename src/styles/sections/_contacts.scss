@@ -1,0 +1,60 @@
+@use '../base/variables' as *;
+@use '../base/mixins' as *;
+.contacts {
+  // Section base styles
+}
+
+.contacts_grid {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  column-gap: $spacing-huge;
+  padding-bottom: $spacing-huge;
+
+  @include respond-to(lg) {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    justify-items: center;
+    gap: 35px;
+  }
+
+  @include respond-to(sm) {
+    grid-template-columns: 1fr;
+    justify-items: stretch;
+  }
+}
+
+.contacts-form {
+  background: $bg-secondary;
+  border-radius: $border-radius-md;
+
+  @include respond-to(lg) {
+    grid-column: 1 / 4;
+    width: 60%;
+  }
+
+  @include respond-to(sm) {
+    grid-column: 1 / 4;
+    width: 100%;
+  }
+}
+
+.contacts-call {
+  background-image: url($img-3cups);
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: $spacing-xxl $spacing-sm;
+  text-align: center;
+
+  @include respond-to(lg) {
+    grid-row: 2 / 3;
+    grid-column: 1 / 4;
+    max-width: 90%;
+  }
+
+  @include respond-to(sm) {
+    max-width: 100%;
+  }
+}
+

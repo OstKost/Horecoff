@@ -1,0 +1,44 @@
+<section id="contacts" class="contacts">
+  <div class="container">
+    <h2 class="gline">Контакты</h2>
+    <div class="contacts_grid">
+      <div class="contacts-form">
+        <form id="form" name="form" class="form" method="post" action="sendMail_simple.php">
+          <h3>Свяжитесь с нами</h3>
+          <div class="form-control">
+            <label for="username"></label>
+            <input type="text" id="username" name="name" placeholder="Ваше имя" required />
+            <small>Error message</small>
+          </div>
+          <div class="form-control">
+            <label for="email"></label>
+            <input name="email" type="text" id="email" placeholder="Ваша почта или телефон" required />
+            <small>Error message</small>
+          </div>
+          <div class="form-control">
+            <label for="textarea"></label>
+            <textarea name="comment" id="textarea" placeholder="Напишите нам"></textarea>
+            <small>Error message</small>
+          </div>
+          <button class="btn btn_blue-send" type="submit" name="submit">
+            Отправить
+          </button>
+        </form>
+      </div>
+      <div class="contacts-call">
+        <p>
+          Для более подробной консультации, пожалуйста, обращайтесь к нашим менеджерам.
+        </p>
+        <p class="fz24">
+          Мы подберем для Вас оборудование и ингредиенты по Вашим запросам,
+          подготовим договор и организуем максимально быструю установку
+          оборудования и поставку товаров.
+        </p>
+        <button class="btn" type="submit">
+          <a href="tel:+79284450728">Позвонить менеджеру</a>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+

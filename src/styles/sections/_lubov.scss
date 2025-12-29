@@ -1,0 +1,65 @@
+@use '../base/variables' as *;
+@use '../base/mixins' as *;
+.lubov {
+  background-color: $color-salad;
+  padding-top: 0px;
+}
+
+.lub {
+  display: flex;
+  padding: 0 !important;
+
+  @include respond-to(sm) {
+    flex-direction: column;
+  }
+}
+
+.lul {
+  max-width: 250px;
+  text-transform: uppercase;
+  font-size: $font-size-large;
+  margin: $spacing-xxl $spacing-lg;
+  color: #000;
+
+  @include respond-to(sm) {
+    max-width: 90%;
+    margin: $spacing-md $spacing-md 0 $spacing-md;
+  }
+}
+
+.lur {
+  background-color: $bg-primary;
+  margin: 22px 0 0 0;
+  width: 100%;
+  color: $text-primary;
+  display: flex;
+  flex-wrap: wrap;
+
+  @include respond-to(md) {
+    flex-direction: column;
+  }
+}
+
+.lus {
+  width: calc(50% - 40px);
+  margin: $spacing-md;
+  font-size: $font-size-medium;
+
+  @include respond-to(md) {
+    width: 90%;
+  }
+}
+
+.lua {
+  font-weight: $font-weight-bold;
+  color: $color-salad;
+}
+
+.lut {
+  margin: $spacing-xxl 0 0 0;
+
+  @include respond-to(sm) {
+    margin: $spacing-xs 0 0 0;
+  }
+}
+
