@@ -1,0 +1,13 @@
+node_modules
+.git
+.gitignore
+dist
+.vite
+*.log
+.DS_Store
+README.md
+docker-compose.yml
+Dockerfile
+.dockerignore
+_agents
+

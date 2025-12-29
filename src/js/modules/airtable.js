@@ -5,21 +5,43 @@ let apparatus = null;
 let techs = null;
 
 export async function getApparatus() {
-  const response = await fetch(
-    `${API_BASE_URL}/${AIRTABLE_CONFIG.TABLES.APPARATUS}?api_key=${AIRTABLE_CONFIG.API_KEY}`
-  );
-  const json = await response.json();
-  apparatus = json;
-  return json;
+  try {
+    const response = await fetch(
+      `${API_BASE_URL}/${AIRTABLE_CONFIG.TABLES.APPARATUS}?api_key=${AIRTABLE_CONFIG.API_KEY}`
+    );
+    
+    if (!response.ok) {
+      console.warn('Failed to fetch apparatus data:', response.status);
+      return { records: [] };
+    }
+    
+    const json = await response.json();
+    apparatus = json;
+    return json;
+  } catch (error) {
+    console.warn('Error fetching apparatus data:', error);
+    return { records: [] };
+  }
 }
 
 export async function getTechs() {
-  const response = await fetch(
-    `${API_BASE_URL}/${AIRTABLE_CONFIG.TABLES.TECHS}?api_key=${AIRTABLE_CONFIG.API_KEY}`
-  );
-  const json = await response.json();
-  techs = json;
-  return json;
+  try {
+    const response = await fetch(
+      `${API_BASE_URL}/${AIRTABLE_CONFIG.TABLES.TECHS}?api_key=${AIRTABLE_CONFIG.API_KEY}`
+    );
+    
+    if (!response.ok) {
+      console.warn('Failed to fetch techs data:', response.status);
+      return { records: [] };
+    }
+    
+    const json = await response.json();
+    techs = json;
+    return json;
+  } catch (error) {
+    console.warn('Error fetching techs data:', error);
+    return { records: [] };
+  }
 }
 
 export function fillModalWindow(idGear) {

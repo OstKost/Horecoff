@@ -1,0 +1,39 @@
+services:
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: horecoff-php
+    volumes:
+      - .:/var/www/html
+    networks:
+      - horecoff-network
+    environment:
+      - PHP_FPM_LISTEN=0.0.0.0:9000
+
+  nginx:
+    image: nginx:alpine
+    container_name: horecoff-nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+      - ./docker/nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php
+    networks:
+      - horecoff-network
+
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: horecoff-mailhog
+    ports:
+      - "1025:1025"  # SMTP порт
+      - "8025:8025"  # Web UI порт
+    networks:
+      - horecoff-network
+
+networks:
+  horecoff-network:
+    driver: bridge
+

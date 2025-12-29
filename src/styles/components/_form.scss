@@ -63,3 +63,24 @@
   }
 }
 
+.captcha-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.captcha-question {
+  font-weight: bold;
+  white-space: nowrap;
+  color: $text-primary;
+  font-size: $font-size-small;
+}
+
+#captcha {
+  flex: 1;
+  max-width: 150px;
+  width: auto;
+}
+

@@ -1,6 +1,22 @@
 <?php
-require '../config.php';
+// Включаем буферизацию вывода, чтобы избежать случайных выводов перед JSON
+ob_start();
+
+// Подключаем config.php из того же каталога
+require __DIR__ . '/config.php';
 $to = $username; // from config
+
+// Проверка капчи
+$captchaAnswer = isset($_POST['captcha_answer']) ? intval($_POST['captcha_answer']) : 0;
+$captchaResult = isset($_POST['captcha_result']) ? intval($_POST['captcha_result']) : 0;
+
+if ($captchaAnswer !== $captchaResult) {
+    ob_clean(); // Очищаем буфер
+    $response = [ 'success' => FALSE, 'message' => 'Неверный ответ на вопрос безопасности' ];
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode( $response, JSON_UNESCAPED_UNICODE );
+    exit;
+}
 
 $subject = "Новая заявка с сайта";
 
@@ -24,6 +40,8 @@ if(mail($to,$subject,$message,$headers)){
     $response = [ 'success' => FALSE, 'message' => 'Mail failed' ];
 }
 
+ob_clean(); // Очищаем буфер перед выводом JSON
 header('Content-Type: application/json; charset=utf-8');
-echo json_encode( $response );
+echo json_encode( $response, JSON_UNESCAPED_UNICODE );
+ob_end_flush();
 ?>

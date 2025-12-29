@@ -470,6 +470,15 @@
               <textarea name="comment" id="textarea" placeholder="Напишите нам"></textarea>
               <small>Error message</small>
             </div>
+            <div class="form-control">
+              <label for="captcha"></label>
+              <div class="captcha-wrapper">
+                <span id="captcha-question" class="captcha-question"></span>
+                <input type="number" id="captcha" name="captcha_answer" placeholder="Введите ответ" required />
+                <input type="hidden" id="captcha-result" name="captcha_result" />
+              </div>
+              <small>Error message</small>
+            </div>
             <button class="btn btn_blue-send" type="submit" name="submit">
               Отправить
             </button>
