@@ -112,6 +112,32 @@ docker-compose ps
 
 Форма защищена простой математической капчей, которая генерируется случайным образом при каждой загрузке страницы. Капча проверяется как на клиенте, так и на сервере перед отправкой email.
 
+### Настройка отправки почты для production
+
+По умолчанию скрипт использует MailHog для тестирования в Docker окружении. Для production сервера необходимо настроить внешний SMTP сервер.
+
+1. Откройте файл `config.php` (если его нет, создайте на основе `config.php.example`)
+
+2. Раскомментируйте и заполните настройки SMTP:
+   ```php
+   define('SMTP_HOST', 'smtp.example.com');        // SMTP сервер
+   define('SMTP_PORT', 587);                       // Порт (587 для TLS, 465 для SSL)
+   define('SMTP_SECURE', 'tls');                   // 'tls', 'ssl' или '' (без шифрования)
+   define('SMTP_AUTH', true);                      // Требуется ли аутентификация
+   define('SMTP_USERNAME', 'your-email@example.com');  // Логин для SMTP
+   define('SMTP_PASSWORD', 'your-password');           // Пароль для SMTP
+   ```
+
+3. Примеры популярных почтовых сервисов:
+   - **Gmail**: `SMTP_HOST='smtp.gmail.com'`, `SMTP_PORT=587`, `SMTP_SECURE='tls'`, `SMTP_AUTH=true`
+   - **Mail.ru**: `SMTP_HOST='smtp.mail.ru'`, `SMTP_PORT=465`, `SMTP_SECURE='ssl'`, `SMTP_AUTH=true`
+   - **Yandex**: `SMTP_HOST='smtp.yandex.ru'`, `SMTP_PORT=465`, `SMTP_SECURE='ssl'`, `SMTP_AUTH=true`
+
+4. Альтернативно можно использовать переменные окружения вместо `define()`:
+   - `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_AUTH`, `SMTP_USERNAME`, `SMTP_PASSWORD`
+
+**Важно**: В production окружении детали ошибок не возвращаются в ответе API для безопасности.
+
 ## Интеграция с Airtable
 
 Интеграция с Airtable API в настоящее время **отключена** по умолчанию. Модуль сохранен в `src/js/modules/airtable.optional.js` и может быть легко включен при необходимости.

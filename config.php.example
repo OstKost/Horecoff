@@ -1,9 +1,12 @@
 <?php
+// Пример конфигурационного файла
+// Скопируйте этот файл в config.php и заполните своими данными
+
 // Email получателя (адрес, на который будут приходить заявки с сайта)
-$username = 'test@test.test';
+$username = 'your-email@example.com';
 
 // Пароль (может использоваться для SMTP аутентификации)
-$password = 'password';
+$password = 'your-password';
 
 // Настройки SMTP для production (раскомментируйте и заполните для использования внешнего SMTP сервера)
 // define('SMTP_HOST', 'smtp.example.com');        // SMTP сервер (например: smtp.gmail.com, smtp.mail.ru)
@@ -20,3 +23,4 @@ $password = 'password';
 // Gmail: SMTP_HOST='smtp.gmail.com', SMTP_PORT=587, SMTP_SECURE='tls', SMTP_AUTH=true
 // Mail.ru: SMTP_HOST='smtp.mail.ru', SMTP_PORT=465, SMTP_SECURE='ssl', SMTP_AUTH=true
 // Yandex: SMTP_HOST='smtp.yandex.ru', SMTP_PORT=465, SMTP_SECURE='ssl', SMTP_AUTH=true
+

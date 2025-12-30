@@ -25,11 +25,16 @@ if ($configPath && file_exists($configPath)) {
 }
 $to = $username; // from config
 
-// Функция для отправки через SMTP (MailHog для Docker)
+// Функция для отправки через SMTP (поддерживает MailHog для Docker и внешние SMTP серверы для production)
 function sendMailViaSMTP($to, $subject, $message, $headers, &$errorMessage = null) {
-    // Для Docker окружения используем MailHog
-    $smtpHost = 'mailhog';
-    $smtpPort = 1025;
+    // Настройки SMTP из config.php или переменных окружения
+    // Для Docker окружения используем MailHog, для production - внешний SMTP
+    $smtpHost = defined('SMTP_HOST') ? SMTP_HOST : (getenv('SMTP_HOST') ?: 'mailhog');
+    $smtpPort = defined('SMTP_PORT') ? SMTP_PORT : (int)(getenv('SMTP_PORT') ?: 1025);
+    $smtpSecure = defined('SMTP_SECURE') ? SMTP_SECURE : (getenv('SMTP_SECURE') ?: ''); // 'ssl' или 'tls' или ''
+    $smtpAuth = defined('SMTP_AUTH') ? SMTP_AUTH : (getenv('SMTP_AUTH') === 'true' || getenv('SMTP_AUTH') === '1');
+    $smtpUsername = defined('SMTP_USERNAME') ? SMTP_USERNAME : (getenv('SMTP_USERNAME') ?: '');
+    $smtpPassword = defined('SMTP_PASSWORD') ? SMTP_PASSWORD : (getenv('SMTP_PASSWORD') ?: '');
     $timeout = 30;
     
     // Парсим заголовки для получения From адреса
@@ -43,12 +48,21 @@ function sendMailViaSMTP($to, $subject, $message, $headers, &$errorMessage = nul
     // Формируем полное письмо (заголовки + тело)
     $fullMessage = $headers . "\r\n\r\n" . $message;
     
-    // Открываем соединение с SMTP сервером
-    $socket = @fsockopen($smtpHost, $smtpPort, $errno, $errstr, $timeout);
+    // Открываем соединение с SMTP сервером (с поддержкой SSL/TLS)
+    $context = stream_context_create();
+    if ($smtpSecure === 'ssl') {
+        $socket = @stream_socket_client("ssl://$smtpHost:$smtpPort", $errno, $errstr, $timeout, STREAM_CLIENT_CONNECT, $context);
+    } else {
+        $socket = @fsockopen($smtpHost, $smtpPort, $errno, $errstr, $timeout);
+    }
+    
     if (!$socket) {
         $errorMessage = "Не удалось подключиться к SMTP серверу $smtpHost:$smtpPort. Ошибка: $errstr ($errno)";
         return false;
     }
+    
+    // Для TLS нужно установить соединение после EHLO
+    $useStartTLS = ($smtpSecure === 'tls');
     
     // Простой SMTP handshake для MailHog
     $response = fgets($socket, 515);
@@ -74,6 +88,60 @@ function sendMailViaSMTP($to, $subject, $message, $headers, &$errorMessage = nul
         $response = fgets($socket, 515);
         if (strpos($response, '250') !== 0) {
             $errorMessage = "Ошибка EHLO/HELO. Ответ: " . trim($response);
+            fclose($socket);
+            return false;
+        }
+        $useStartTLS = false; // HELO не поддерживает STARTTLS
+    }
+    
+    // STARTTLS для TLS соединений (после EHLO)
+    if ($useStartTLS && strpos($response, 'STARTTLS') !== false) {
+        fputs($socket, "STARTTLS\r\n");
+        $response = fgets($socket, 515);
+        if (strpos($response, '220') !== 0) {
+            $errorMessage = "Ошибка STARTTLS. Ответ: " . trim($response);
+            fclose($socket);
+            return false;
+        }
+        // Включаем шифрование
+        if (!stream_socket_enable_crypto($socket, true, STREAM_CRYPTO_METHOD_TLS_CLIENT)) {
+            $errorMessage = "Не удалось установить TLS соединение";
+            fclose($socket);
+            return false;
+        }
+        // После STARTTLS нужно еще раз послать EHLO
+        fputs($socket, "EHLO localhost\r\n");
+        $response = '';
+        while ($line = fgets($socket, 515)) {
+            $response .= $line;
+            if (substr(trim($line), 3, 1) === ' ') {
+                break;
+            }
+        }
+    }
+    
+    // SMTP аутентификация (AUTH LOGIN)
+    if ($smtpAuth && !empty($smtpUsername) && !empty($smtpPassword)) {
+        fputs($socket, "AUTH LOGIN\r\n");
+        $response = fgets($socket, 515);
+        if (strpos($response, '334') !== 0) {
+            $errorMessage = "Ошибка AUTH LOGIN. Ответ: " . trim($response);
+            fclose($socket);
+            return false;
+        }
+        // Отправляем username
+        fputs($socket, base64_encode($smtpUsername) . "\r\n");
+        $response = fgets($socket, 515);
+        if (strpos($response, '334') !== 0) {
+            $errorMessage = "Ошибка аутентификации (username). Ответ: " . trim($response);
+            fclose($socket);
+            return false;
+        }
+        // Отправляем password
+        fputs($socket, base64_encode($smtpPassword) . "\r\n");
+        $response = fgets($socket, 515);
+        if (strpos($response, '235') !== 0) {
+            $errorMessage = "Ошибка аутентификации (password). Ответ: " . trim($response);
             fclose($socket);
             return false;
         }
@@ -167,17 +235,25 @@ if (!$mailSent) {
 if ($mailSent) {
     $response = [ 'success' => TRUE, 'message' => 'Mail success' ];
 } else {
-    // Включаем подробные ошибки для отладки (в production можно убрать)
+    // Формируем ответ об ошибке
+    // В production можно убрать детали ошибки из ответа для безопасности
+    $isProduction = defined('SMTP_HOST') || getenv('SMTP_HOST');
     $response = [ 
         'success' => FALSE, 
-        'message' => 'Mail failed',
-        'error' => $errorDetails ?: 'Unknown error',
-        'debug' => [
-            'to' => $to,
-            'smtp_host' => 'mailhog',
-            'smtp_port' => 1025
-        ]
+        'message' => 'Mail failed'
     ];
+    
+    // Добавляем детали ошибки только для отладки (не в production)
+    if (!$isProduction) {
+        $response['error'] = $errorDetails ?: 'Unknown error';
+        $smtpHostDebug = defined('SMTP_HOST') ? SMTP_HOST : (getenv('SMTP_HOST') ?: 'mailhog');
+        $smtpPortDebug = defined('SMTP_PORT') ? SMTP_PORT : (int)(getenv('SMTP_PORT') ?: 1025);
+        $response['debug'] = [
+            'to' => $to,
+            'smtp_host' => $smtpHostDebug,
+            'smtp_port' => $smtpPortDebug
+        ];
+    }
 }
 
 ob_clean(); // Очищаем буфер перед выводом JSON
