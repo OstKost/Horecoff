@@ -2,8 +2,27 @@
 // Включаем буферизацию вывода, чтобы избежать случайных выводов перед JSON
 ob_start();
 
-// Подключаем config.php из того же каталога
-require __DIR__ . '/config.php';
+// Подключаем config.php из корневой директории проекта
+// Используем несколько вариантов пути для совместимости с разными окружениями
+$configPath = null;
+if (file_exists(__DIR__ . '/config.php')) {
+    $configPath = __DIR__ . '/config.php';
+} elseif (isset($_SERVER['DOCUMENT_ROOT']) && file_exists($_SERVER['DOCUMENT_ROOT'] . '/config.php')) {
+    $configPath = $_SERVER['DOCUMENT_ROOT'] . '/config.php';
+} elseif (file_exists('/var/www/html/config.php')) {
+    $configPath = '/var/www/html/config.php';
+} else {
+    // Последняя попытка - ищем в текущей директории
+    $configPath = dirname(__FILE__) . '/config.php';
+}
+if ($configPath && file_exists($configPath)) {
+    require $configPath;
+} else {
+    http_response_code(500);
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode(['success' => false, 'message' => 'Configuration file not found'], JSON_UNESCAPED_UNICODE);
+    exit;
+}
 $to = $username; // from config
 
 // Проверка капчи

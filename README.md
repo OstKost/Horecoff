@@ -112,6 +112,70 @@ docker-compose ps
 
 Форма защищена простой математической капчей, которая генерируется случайным образом при каждой загрузке страницы. Капча проверяется как на клиенте, так и на сервере перед отправкой email.
 
+## Интеграция с Airtable
+
+Интеграция с Airtable API в настоящее время **отключена** по умолчанию. Модуль сохранен в `src/js/modules/airtable.optional.js` и может быть легко включен при необходимости.
+
+### Текущий статус
+
+- ✅ Модуль Airtable сохранен как `airtable.optional.js`
+- ❌ Все вызовы Airtable API отключены
+- ✅ Код не удален, готов к включению
+
+### Как включить Airtable интеграцию
+
+1. Откройте файл `src/js/modules/apparatus.js`
+
+2. Раскомментируйте импорт модуля (строка 3):
+   ```javascript
+   import { getApparatus, getTechs, fillModalWindow, getApparatusData, getTechsData } from './airtable.optional.js';
+   ```
+
+3. Раскомментируйте вызовы функций в `initApparatusSlider()` (строки 12-14):
+   ```javascript
+   const apparatusData = await getApparatus();
+   await getTechs();
+   const machines = (apparatusData && apparatusData.records) || [];
+   ```
+
+4. Удалите или закомментируйте строку с пустым массивом (строка 17):
+   ```javascript
+   // const machines = [];  // Удалить эту строку
+   ```
+
+5. Раскомментируйте вызов `fillModalWindow(id)` в функции `openModal()` (строка 63):
+   ```javascript
+   fillModalWindow(id);
+   ```
+
+6. Настройте конфигурацию в `src/data/config.js`:
+   - Убедитесь, что `AIRTABLE_CONFIG` содержит правильные значения
+   - Для production рекомендуется использовать переменные окружения:
+     ```javascript
+     API_KEY: import.meta.env.VITE_AIRTABLE_API_KEY || 'your-api-key'
+     ```
+
+7. Пересоберите проект:
+   ```bash
+   npm run build
+   ```
+
+### Как отключить Airtable интеграцию
+
+Чтобы отключить Airtable интеграцию, выполните обратные действия:
+1. Закомментируйте импорт модуля
+2. Закомментируйте все вызовы функций Airtable
+3. Установите `machines = []` (пустой массив)
+4. Закомментируйте вызов `fillModalWindow(id)`
+
+### Структура данных Airtable
+
+Модуль работает с двумя таблицами Airtable:
+- **apparatus** - таблица с оборудованием (кофемашины)
+- **techs** - таблица с техническими характеристиками
+
+Подробнее о структуре данных и полях см. в комментариях файла `src/js/modules/airtable.optional.js`.
+
 ## Архитектура
 
 Подробное описание архитектуры см. в [ARCHITECTURE.md](./ARCHITECTURE.md)

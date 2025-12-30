@@ -1,3 +1,15 @@
+/**
+ * Airtable Integration Module - OPTIONAL/DISABLED
+ * 
+ * This module is currently disabled. To enable Airtable integration:
+ * 1. Uncomment the import in src/js/modules/apparatus.js
+ * 2. Uncomment the function calls in initApparatusSlider()
+ * 3. Restore the machines array initialization
+ * 
+ * This module provides functions to fetch and process data from Airtable API
+ * for the apparatus (equipment) and techs (technical specifications) tables.
+ */
+
 import { API_BASE_URL, AIRTABLE_CONFIG } from '../../data/config.js';
 
 // Store apparatus and techs data

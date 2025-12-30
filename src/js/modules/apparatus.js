@@ -1,14 +1,20 @@
-import { getApparatus, getTechs, fillModalWindow, getApparatusData, getTechsData } from './airtable.js';
+// Airtable integration - DISABLED
+// To enable Airtable integration, uncomment the import below and restore the function calls
+// import { getApparatus, getTechs, fillModalWindow, getApparatusData, getTechsData } from './airtable.optional.js';
 import { popupOpen } from './popup.js';
 import { nextSlide } from './slider.js';
 
 export async function initApparatusSlider() {
   let interval = null;
 
-  const apparatusData = await getApparatus();
-  await getTechs();
+  // Airtable integration - DISABLED
+  // To enable Airtable, uncomment the lines below:
+  // const apparatusData = await getApparatus();
+  // await getTechs();
+  // const machines = (apparatusData && apparatusData.records) || [];
 
-  const machines = (apparatusData && apparatusData.records) || [];
+  // Empty array when Airtable is disabled
+  const machines = [];
 
   machines.sort((a, b) => {
     const { Position: p1 = 0 } = a.fields || {};
@@ -52,8 +58,9 @@ export async function initApparatusSlider() {
         const currentPopup = document.getElementById('popup');
         if (!currentPopup) return;
         popupOpen(currentPopup);
-        // fillModalWindow использует глобальные переменные из airtable.js
-        fillModalWindow(id);
+        // Airtable integration - DISABLED
+        // To enable Airtable, uncomment the line below:
+        // fillModalWindow(id);
       };
     }
 
