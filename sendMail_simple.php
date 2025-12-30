@@ -2,20 +2,34 @@
 // Включаем буферизацию вывода, чтобы избежать случайных выводов перед JSON
 ob_start();
 
-// Подключаем config.php из корневой директории проекта
-// Используем несколько вариантов пути для совместимости с разными окружениями
+// Подключаем config.php - ищем в нескольких местах для совместимости с разными окружениями
+// Приоритет поиска:
+// 1. Текущая директория (для разработки)
+// 2. Родительская директория (для production, где config.php выше для безопасности)
+// 3. DOCUMENT_ROOT
+// 4. /var/www/html (Docker окружение)
 $configPath = null;
-if (file_exists(__DIR__ . '/config.php')) {
-    $configPath = __DIR__ . '/config.php';
-} elseif (isset($_SERVER['DOCUMENT_ROOT']) && file_exists($_SERVER['DOCUMENT_ROOT'] . '/config.php')) {
-    $configPath = $_SERVER['DOCUMENT_ROOT'] . '/config.php';
-} elseif (file_exists('/var/www/html/config.php')) {
-    $configPath = '/var/www/html/config.php';
-} else {
-    // Последняя попытка - ищем в текущей директории
-    $configPath = dirname(__FILE__) . '/config.php';
+
+// Список возможных путей к config.php (в порядке приоритета)
+$possiblePaths = [
+    __DIR__ . '/config.php',                                    // Текущая директория (разработка)
+    dirname(__DIR__) . '/config.php',                           // Родительская директория (production)
+    isset($_SERVER['DOCUMENT_ROOT']) ? $_SERVER['DOCUMENT_ROOT'] . '/config.php' : null,
+    isset($_SERVER['DOCUMENT_ROOT']) ? dirname($_SERVER['DOCUMENT_ROOT']) . '/config.php' : null, // Родительская от DOCUMENT_ROOT
+    '/var/www/html/config.php',                                 // Docker окружение
+    dirname(__FILE__) . '/config.php',                          // Альтернативный путь к текущей директории
+    dirname(dirname(__FILE__)) . '/config.php',                 // Альтернативный путь к родительской
+];
+
+// Ищем первый существующий файл
+foreach ($possiblePaths as $path) {
+    if ($path && file_exists($path) && is_file($path)) {
+        $configPath = $path;
+        break;
+    }
 }
-if ($configPath && file_exists($configPath)) {
+
+if ($configPath) {
     require $configPath;
 } else {
     http_response_code(500);
